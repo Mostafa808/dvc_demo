@@ -1,0 +1,65 @@
+schema: '2.0'
+stages:
+  drop_trans_id:
+    cmd: python tools\dropper.py original_dataset\synthetic_fraud_dataset.csv 
+      stage1_out drop_trans_id
+    deps:
+    - path: original_dataset\synthetic_fraud_dataset.csv
+      hash: md5
+      md5: cba6dc9b3f413e3c234b08f5f1792c6d
+      size: 868125
+    - path: tools\dropper.py
+      hash: md5
+      md5: fe3e0c440054df829963ac34700302d6
+      size: 811
+    params:
+      params.yaml:
+        drop_trans_id.column_to_drop: user_id
+    outs:
+    - path: stage1_out
+      hash: md5
+      md5: 4d51e2dbbb41ad1d01a3eb74ab43b8b5.dir
+      size: 819895
+      nfiles: 1
+  drop_user_id:
+    cmd: python tools\dropper.py stage1_out\synthetic_fraud_dataset.csv 
+      stage2_out drop_user_id
+    deps:
+    - path: stage1_out\synthetic_fraud_dataset.csv
+      hash: md5
+      md5: 19e1b029faf3ccbf357ee7be860a59f5
+      size: 819895
+    - path: tools\dropper.py
+      hash: md5
+      md5: fe3e0c440054df829963ac34700302d6
+      size: 811
+    params:
+      params.yaml:
+        drop_user_id.column_to_drop: transaction_id
+    outs:
+    - path: stage2_out
+      hash: md5
+      md5: aed552ab85c729146eb5237001fe671b.dir
+      size: 770908
+      nfiles: 1
+  tokenize_trans_type:
+    cmd: python tools\tokenizer.py stage2_out\synthetic_fraud_dataset.csv 
+      stage3_out tokenize_trans_type
+    deps:
+    - path: stage2_out\synthetic_fraud_dataset.csv
+      hash: md5
+      md5: d8a2253e5cc1b472c68adced86398d08
+      size: 770908
+    - path: tools\tokenizer.py
+      hash: md5
+      md5: 170bbb433cae83839572ef78f9a797f6
+      size: 1104
+    params:
+      params.yaml:
+        tokenize_trans_type.column_to_tokenize: transaction_type
+    outs:
+    - path: stage3_out
+      hash: md5
+      md5: 8709dc68eb772affe66bd1b899b00c60.dir
+      size: 746212
+      nfiles: 1

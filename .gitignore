@@ -1,1 +1,4 @@
 .vscode/
+/stage1_out
+/stage2_out
+/stage3_out

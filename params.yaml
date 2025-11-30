@@ -1,0 +1,6 @@
+drop_trans_id:
+  column_to_drop: "transaction_id"
+drop_user_id:
+  column_to_drop: "user_id"
+tokenize_trans_type:
+  column_to_tokenize: "transaction_type"

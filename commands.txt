@@ -1,0 +1,5 @@
+dvc stage add --name drop_trans_id --deps original_dataset\synthetic_fraud_dataset.csv --deps tools\dropper.py --params drop_trans_id.column_to_drop --outs stage1_out python tools\dropper.py original_dataset\synthetic_fraud_dataset.csv stage1_out drop_trans_id
+
+dvc stage add --name drop_user_id --deps stage1_out\synthetic_fraud_dataset.csv --deps tools\dropper.py --params drop_user_id.column_to_drop --outs stage2_out python tools\dropper.py stage1_out\synthetic_fraud_dataset.csv stage2_out drop_user_id
+
+dvc stage add --name tokenize_trans_type --deps stage2_out\synthetic_fraud_dataset.csv --deps tools\tokenizer.py --params tokenize_trans_type.column_to_tokenize --outs stage3_out python tools\tokenizer.py stage2_out\synthetic_fraud_dataset.csv stage3_out tokenize_trans_type
